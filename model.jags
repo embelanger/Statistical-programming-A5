@@ -1,0 +1,13 @@
+model{
+  mu[1] <- alpha
+  x[1] ~ dt(mu[1], tau, k)
+  for(i in 2:N){
+    mu[i] <- (x[i-1] - alpha)*rho + alpha
+    x[i] ~ dt(mu[i], tau, k)
+  }
+    
+  tau ~ dexp(1)
+  rho ~ dunif(0, 0.9)
+  alpha ~ dnorm(0, 0.0001)
+  k ~ dunif(2, 100)
+}
